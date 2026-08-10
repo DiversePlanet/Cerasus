@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cerasus — The Build</title>
+<meta name="description" content="Explore the Cerasus build on Rulercraft.">
+<link rel="stylesheet" href="style.css">
+
+<style>
+.build-page{
+  background:#f5f5f7;
+  color:#1d1d1f;
+  min-height:100vh
+}
+
+.build-nav{
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 5%;
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(245,245,247,.82);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid #ddd
+}
+
+.build-nav a{
+  font-size:13px;
+  color:#555
+}
+
+.build-nav .back{
+  color:#0066cc
+}
+
+.build-hero{
+  text-align:center;
+  padding:135px 20px 90px
+}
+
+.build-hero .eyebrow{
+  color:#777
+}
+
+.build-hero h1{
+  font-size:clamp(60px,9vw,120px);
+  line-height:.9;
+  letter-spacing:-7px;
+  margin:20px 0
+}
+
+.build-hero h1 span{
+  color:#bf72ff
+}
+
+.build-hero p{
+  max-width:650px;
+  margin:auto;
+  color:#777;
+  font-size:20px
+}
+
+.build-gallery{
+  max-width:1180px;
+  margin:auto;
+  padding:20px 5% 130px;
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  grid-auto-rows:280px;
+  gap:18px
+}
+
+.build-shot{
+  border-radius:24px;
+  overflow:hidden;
+  position:relative;
+  background:linear-gradient(135deg,#dedee3,#9999a1);
+  display:flex;
+  align-items:flex-end
+}
+
+.build-shot:nth-child(1){
+  grid-row:span 2;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(255,255,255,.5),transparent 25%),
+    linear-gradient(145deg,#d8d8dd,#77777f)
+}
+
+.build-shot:nth-child(2){
+  background:linear-gradient(145deg,#202026,#777780)
+}
+
+.build-shot:nth-child(3){
+  background:linear-gradient(145deg,#111116,#45454d)
+}
+
+.build-shot:nth-child(4){
+  grid-column:span 2;
+  background:linear-gradient(135deg,#cfcfd5,#64646b)
+}
+
+/* Gallery photos */
+.build-shot img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:center;
+}
+
+.build-shot::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,.68),
+    rgba(0,0,0,.08) 65%,
+    transparent
+  );
+  pointer-events:none;
+}
+
+.shot-content{
+  position:relative;
+  z-index:2;
+  padding:28px;
+  color:white;
+  width:100%;
+  background:linear-gradient(transparent,rgba(0,0,0,.65))
+}
+
+.shot-content small{
+  color:#ddd
+}
+
+.shot-content h2{
+  font-size:26px;
+  letter-spacing:-1px;
+  margin:5px 0 0
+}
+
+.build-note{
+  max-width:900px;
+  margin:0 auto 120px;
+  padding:30px 5%;
+  border-top:1px solid #ddd;
+  color:#777;
+  text-align:center
+}
+
+.build-note strong{
+  color:#1d1d1f
+}
+
+.build-visit{
+  text-align:center;
+  background:#000;
+  color:white;
+  padding:130px 20px
+}
+
+.build-visit h2{
+  font-size:clamp(50px,7vw,90px);
+  letter-spacing:-5px;
+  line-height:.95
+}
+
+.build-visit p{
+  color:#888
+}
+
+.build-visit .learn{
+  color:#66a8ff
+}
+
+@media(max-width:800px){
+  .build-hero{
+    padding:100px 20px 70px
+  }
+
+  .build-hero h1{
+    letter-spacing:-4px
+  }
+
+  .build-gallery{
+    grid-template-columns:1fr;
+    grid-auto-rows:260px
+  }
+
+  .build-shot:nth-child(1),
+  .build-shot:nth-child(4){
+    grid-column:auto;
+    grid-row:auto
+  }
+}
+
+.main-build-brand{
+  font-weight:700;
+  letter-spacing:4px;
+  color:#1d1d1f
+}
+
+.build-contact{
+  text-align:center;
+  background:#f5f5f7;
+  border-top:1px solid #ddd;
+  padding:100px 20px 120px
+}
+
+.build-contact h2{
+  font-size:clamp(45px,6vw,75px);
+  letter-spacing:-4px;
+  line-height:.95
+}
+
+.build-contact p{
+  color:#777
+}
+
+
+/* =========================================================
+   CERASUS FOOTER — SAME AS MAIN SITE
+   ========================================================= */
+
+.build-page footer{
+  background:#f5f5f7;
+  color:#777;
+  border-top:1px solid #ddd;
+  padding:30px 5%;
+  font-size:11px;
+}
+
+.build-page .footer-top,
+.build-page .footer-bottom{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.build-page .footer-bottom{
+  border-top:1px solid #ddd;
+  margin-top:25px;
+  padding-top:18px;
+}
+
+.build-page .apple-brand{
+  position:static;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:#222;
+  font-size:15px;
+  font-weight:650;
+  letter-spacing:4px;
+}
+
+.build-page .apple-logo{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  font-size:18px;
+  line-height:1;
+  letter-spacing:0;
+  color:#222;
+}
+
+@media(max-width:800px){
+  .build-page .footer-top,
+  .build-page .footer-bottom{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+  }
+}
+</style>
+</head>
+
+<body class="build-page">
+
+<header class="build-nav">
+  <a class="main-build-brand" href="index.html"> CERASUS</a>
+  <a class="back" href="index.html#projects">← Back to projects</a>
+</header>
+
+<main>
+
+<section class="build-hero">
+  <p class="eyebrow">CERASUS · BUILD ARCHIVE</p>
+
+  <h1>
+    Built in<br>
+    <span>Minecraft.</span>
+  </h1>
+
+  <p>
+    A closer look at the work behind Cerasus — architecture,
+    infrastructure and landmarks built on the Rulercraft 1:500 world map.
+  </p>
+</section>
+
+
+<section class="build-gallery">
+
+  <article class="build-shot">
+    <div class="shot-content">
+      <small>01 · CITY</small>
+      <h2>Cerasus</h2>
+    </div>
+  </article>
+
+  <article class="build-shot">
+    <div class="shot-content">
+      <small>02 · LANDMARK</small>
+      <h2>Apple Park</h2>
+    </div>
+  </article>
+
+  <article class="build-shot">
+    <div class="shot-content">
+      <small>03 · INFRASTRUCTURE</small>
+      <h2>The City Network</h2>
+    </div>
+  </article>
+
+  <article class="build-shot">
+    <div class="shot-content">
+      <small>04 · LANDMARKS</small>
+      <h2>More from Cerasus</h2>
+    </div>
+  </article>
+
+</section>
+
+
+<div class="build-note">
+  <strong>Build gallery ready.</strong><br>
+  Replace these visual panels with your actual Cerasus screenshots when you're ready.
+  The page is already structured as a dedicated build showcase.
+</div>
+
+
+<section class="build-visit">
+
+  <p class="eyebrow">VISIT IN GAME</p>
+
+  <h2>See the real thing.</h2>
+
+  <p>
+    X 21400 · Z −6232 · Rulercraft
+  </p>
+
+  <a class="learn" href="index.html#visit">
+    Get directions →
+  </a>
+
+</section>
+
+
+<section class="build-contact">
+
+  <p class="eyebrow">CONTACT CERASUS</p>
+
+  <h2>Want to know more?</h2>
+
+  <p>
+    .DiversePlanet43 · diverseplanet · applepark.contact@icloud.com
+  </p>
+
+  <a class="learn" href="mailto:applepark.contact@icloud.com">
+    Send an email →
+  </a>
+
+</section>
+
+</main>
+
+
+<!-- =====================================================
+     SAME FOOTER AS THE MAIN CERASUS WEBSITE
+     ===================================================== -->
+
+<footer>
+
+  <div class="footer-top">
+
+    <div class="apple-brand">
+      <span class="apple-logo"></span>
+      <span>CERASUS</span>
+    </div>
+
+    <span>Built on Rulercraft.</span>
+
+  </div>
+
+
+  <div class="footer-bottom">
+
+    <span>© 2026 Cerasus</span>
+
+    <span>Coordinates: 21400, −6232</span>
+
+  </div>
+
+</footer>
+
+
+</body>
+</html>
