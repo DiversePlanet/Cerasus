@@ -1,78 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Cerasus — City Map</title>
-<meta name="description" content="Explore Cerasus on the Rulercraft world map.">
+
+<meta
+  name="description"
+  content="Explore Cerasus on the Rulercraft world map."
+>
 
 <style>
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
 
 *{
   box-sizing:border-box;
 }
 
-html{
-  scroll-behavior:smooth;
+html,
+body{
+  margin:0;
+  width:100%;
+  height:100%;
 }
 
 body{
-  margin:0;
   background:#f5f5f7;
   color:#1d1d1f;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  overflow:hidden;
 }
 
-/* NAV */
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
 .map-nav{
+
   height:52px;
+
   padding:0 5%;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
 
-  position:sticky;
-  top:0;
+  position:relative;
   z-index:100;
 
-  background:rgba(245,245,247,.82);
+  background:rgba(245,245,247,.86);
+
   backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
 
   border-bottom:1px solid #ddd;
 }
 
 .map-brand{
+
+  color:#1d1d1f;
+  text-decoration:none;
+
+  font-size:15px;
   font-weight:700;
+
   letter-spacing:4px;
 }
 
 .map-back{
+
   color:#0066cc;
+
   text-decoration:none;
+
   font-size:13px;
+
+  transition:opacity .2s;
 }
 
-/* HERO */
+.map-back:hover{
+  opacity:.65;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
 
 .map-hero{
+
   text-align:center;
-  padding:110px 20px 60px;
+
+  padding:30px 20px 20px;
 }
 
 .map-eyebrow{
+
   color:#777;
-  font-size:12px;
+
+  font-size:10px;
+
   letter-spacing:3px;
+
   font-weight:600;
+
+  margin-bottom:10px;
 }
 
 .map-hero h1{
-  font-size:clamp(60px,9vw,120px);
+
+  font-size:clamp(42px,5vw,68px);
+
   line-height:.9;
-  letter-spacing:-7px;
-  margin:20px 0;
+
+  letter-spacing:-4px;
+
+  margin:0 0 12px;
 }
 
 .map-hero h1 span{
@@ -80,60 +136,118 @@ body{
 }
 
 .map-hero p{
-  max-width:650px;
-  margin:auto;
+
+  max-width:620px;
+
+  margin:0 auto;
+
   color:#777;
-  font-size:20px;
-  line-height:1.5;
+
+  font-size:15px;
+
+  line-height:1.4;
 }
 
-/* MAP */
+
+/* =========================================================
+   MAP AREA
+   ========================================================= */
 
 .map-wrapper{
-  max-width:1300px;
-  margin:0 auto;
-  padding:20px 5% 120px;
+
+  width:100%;
+
+  display:flex;
+  justify-content:center;
+
+  padding:0 20px;
 }
+
+
+/*
+   The original map is approximately 3:2.
+
+   Keeping this aspect ratio means the entire image
+   remains visible and the markers stay correctly aligned.
+*/
 
 .map{
+
   position:relative;
-  width:100%;
+
+  width:min(
+    1300px,
+    calc((100vh - 175px) * 1.5),
+    calc(100vw - 40px)
+  );
+
+  aspect-ratio:3 / 2;
+
   overflow:hidden;
 
-  border-radius:28px;
+  border-radius:24px;
 
-  box-shadow:
-    0 25px 70px rgba(0,0,0,.18);
+  border:1px solid rgba(0,0,0,.14);
 
   background:#222;
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.16),
+    0 2px 8px rgba(0,0,0,.06);
 }
+
+
+/* =========================================================
+   MAP IMAGE
+   ========================================================= */
 
 .map img{
-  display:block;
+
+  position:absolute;
+
+  inset:0;
+
   width:100%;
-  height:auto;
+  height:100%;
+
+  display:block;
+
+  object-fit:cover;
+
+  user-select:none;
+
+  -webkit-user-drag:none;
 }
 
-/* MARKERS */
+
+/* =========================================================
+   MARKERS
+   ========================================================= */
 
 .marker{
+
   position:absolute;
 
   width:20px;
   height:20px;
+
+  padding:0;
 
   transform:translate(-50%,-50%);
 
   border-radius:50%;
 
   background:#bf72ff;
+
   border:3px solid white;
 
   box-shadow:
     0 0 0 5px rgba(191,114,255,.25),
     0 5px 15px rgba(0,0,0,.3);
 
-  cursor:pointer;
+  cursor:grab;
+
+  z-index:10;
 
   transition:
     transform .2s,
@@ -141,161 +255,328 @@ body{
 }
 
 .marker:hover{
-  transform:translate(-50%,-50%) scale(1.35);
+
+  transform:
+    translate(-50%,-50%)
+    scale(1.35);
 
   box-shadow:
     0 0 0 8px rgba(191,114,255,.2),
     0 5px 20px rgba(0,0,0,.4);
 }
 
-/* MARKER POSITIONS */
+.marker.dragging{
+
+  cursor:grabbing;
+
+  transform:
+    translate(-50%,-50%)
+    scale(1.3);
+
+  box-shadow:
+    0 0 0 10px rgba(191,114,255,.25),
+    0 8px 25px rgba(0,0,0,.4);
+}
+
+
+/* =========================================================
+   MARKER POSITIONS
+   ========================================================= */
+
+/*
+   You can change these yourself.
+
+   left = left/right
+   top  = up/down
+
+   Example:
+
+   left:50%;
+   top:50%;
+
+   puts the marker in the exact center.
+*/
+
 
 /* Apple Park */
+
 .apple{
   left:23.2%;
   top:49.6%;
 }
 
+
 /* Pentagon */
+
 .pentagon{
   left:52.8%;
   top:32.3%;
 }
 
+
 /* Airport */
+
 .airport{
   left:66.7%;
   top:28.7%;
 }
 
+
 /* Laboratories */
+
 .labs{
   left:40.3%;
   top:24.6%;
 }
 
-/* Sphere */
+
+/* Cerasus Sphere */
+
 .sphere{
   left:43.0%;
   top:45.4%;
 }
 
+
 /* Twin Towers */
+
 .towers{
   left:43.3%;
   top:60.1%;
 }
 
+
 /* Falcon Heavy */
+
 .falcon{
   left:22.7%;
   top:87.1%;
 }
 
-/* INFO CARD */
+
+/* =========================================================
+   INFO CARD
+   ========================================================= */
 
 .map-info{
+
   position:absolute;
 
   left:50%;
-  bottom:25px;
+  bottom:20px;
 
   transform:translateX(-50%);
 
-  width:min(90%,420px);
+  width:min(
+    calc(100% - 30px),
+    420px
+  );
 
-  padding:24px;
+  padding:20px 22px;
 
-  border-radius:22px;
+  border-radius:20px;
 
   background:rgba(20,20,25,.88);
+
   backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
 
   color:white;
 
   opacity:0;
+
   pointer-events:none;
 
-  transition:.25s;
+  transition:
+    opacity .25s,
+    transform .25s;
 
-  box-shadow:0 15px 40px rgba(0,0,0,.35);
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.35);
+
+  z-index:30;
 }
 
 .map-info.active{
+
   opacity:1;
+
   pointer-events:auto;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
 }
 
 .map-info small{
+
   color:#aaa;
+
+  font-size:10px;
+
   letter-spacing:2px;
 }
 
 .map-info h2{
-  margin:6px 0 10px;
-  font-size:28px;
+
+  margin:6px 0 8px;
+
+  font-size:25px;
+
+  letter-spacing:-1px;
 }
 
 .map-info p{
-  margin:5px 0;
+
+  margin:0;
+
   color:#ccc;
+
+  font-size:14px;
 }
 
 .close{
+
   position:absolute;
-  top:15px;
-  right:18px;
+
+  top:12px;
+  right:17px;
 
   cursor:pointer;
 
   color:#aaa;
-  font-size:20px;
+
+  font-size:21px;
+
+  line-height:1;
+
+  transition:color .2s;
 }
 
-/* FOOTER */
+.close:hover{
+  color:white;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 footer{
-  padding:35px 5%;
-  border-top:1px solid #ddd;
-  color:#777;
-  font-size:11px;
+
+  display:none;
 }
 
-.footer-inner{
-  max-width:1200px;
-  margin:auto;
 
-  display:flex;
-  justify-content:space-between;
-}
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media(max-width:700px){
 
+  body{
+    overflow:hidden;
+  }
+
+  .map-nav{
+
+    height:48px;
+
+    padding:0 20px;
+  }
+
+  .map-brand{
+    font-size:12px;
+    letter-spacing:3px;
+  }
+
+  .map-back{
+    font-size:12px;
+  }
+
   .map-hero{
-    padding:80px 20px 40px;
+
+    padding:22px 15px 15px;
+  }
+
+  .map-eyebrow{
+    font-size:9px;
+    letter-spacing:2px;
   }
 
   .map-hero h1{
-    letter-spacing:-4px;
+
+    font-size:44px;
+
+    letter-spacing:-3px;
+
+    margin-bottom:10px;
+  }
+
+  .map-hero p{
+
+    font-size:13px;
+
+    max-width:450px;
   }
 
   .map-wrapper{
-    padding-left:15px;
-    padding-right:15px;
+
+    padding:0 10px;
   }
 
   .map{
+
+    width:100%;
+
     border-radius:18px;
   }
 
   .marker{
+
     width:15px;
     height:15px;
+
+    border-width:2px;
+
+    box-shadow:
+      0 0 0 4px rgba(191,114,255,.25),
+      0 3px 10px rgba(0,0,0,.3);
   }
 
-  .footer-inner{
-    flex-direction:column;
-    gap:15px;
+  .map-info{
+
+    bottom:10px;
+
+    padding:16px 18px;
+
+    border-radius:17px;
+  }
+
+  .map-info h2{
+    font-size:21px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media(max-width:700px) and (max-height:700px){
+
+  .map-hero{
+    padding:12px 15px 10px;
+  }
+
+  .map-hero h1{
+    font-size:36px;
+    margin-bottom:6px;
+  }
+
+  .map-hero p{
+    display:none;
   }
 
 }
@@ -306,13 +587,24 @@ footer{
 
 <body>
 
+
+<!-- =====================================================
+     NAVIGATION
+     ===================================================== -->
+
 <header class="map-nav">
 
-  <a class="map-brand" href="index.html">
+  <a
+    class="map-brand"
+    href="index.html"
+  >
      CERASUS
   </a>
 
-  <a class="map-back" href="index.html">
+  <a
+    class="map-back"
+    href="index.html"
+  >
     ← Back to homepage
   </a>
 
@@ -320,6 +612,11 @@ footer{
 
 
 <main>
+
+
+<!-- =====================================================
+     HERO
+     ===================================================== -->
 
 <section class="map-hero">
 
@@ -340,20 +637,31 @@ footer{
 </section>
 
 
+<!-- =====================================================
+     MAP
+     ===================================================== -->
+
 <section class="map-wrapper">
 
 <div class="map">
 
+
+  <!-- MAP IMAGE -->
+
   <img
     src="Assets/CerasusAbove.png"
     alt="Aerial map of Cerasus"
+    draggable="false"
   >
 
 
-  <!-- APPLE PARK -->
+  <!-- =================================================
+       APPLE PARK
+       ================================================= -->
 
   <button
     class="marker apple"
+    aria-label="Apple Park"
     onclick="showInfo(
       'Apple Park',
       'LANDMARK',
@@ -362,10 +670,13 @@ footer{
   </button>
 
 
-  <!-- PENTAGON -->
+  <!-- =================================================
+       PENTAGON
+       ================================================= -->
 
   <button
     class="marker pentagon"
+    aria-label="Pentagon"
     onclick="showInfo(
       'Pentagon',
       'HEADQUARTERS',
@@ -374,10 +685,13 @@ footer{
   </button>
 
 
-  <!-- AIRPORT -->
+  <!-- =================================================
+       AIRPORT
+       ================================================= -->
 
   <button
     class="marker airport"
+    aria-label="Cerasus Airport"
     onclick="showInfo(
       'Cerasus Airport',
       'AVIATION',
@@ -386,10 +700,13 @@ footer{
   </button>
 
 
-  <!-- LABORATORIES -->
+  <!-- =================================================
+       LABORATORIES
+       ================================================= -->
 
   <button
     class="marker labs"
+    aria-label="Laboratories"
     onclick="showInfo(
       'Laboratories',
       'RESEARCH',
@@ -398,10 +715,13 @@ footer{
   </button>
 
 
-  <!-- SPHERE -->
+  <!-- =================================================
+       CERASUS SPHERE
+       ================================================= -->
 
   <button
     class="marker sphere"
+    aria-label="Cerasus Sphere"
     onclick="showInfo(
       'Cerasus Sphere',
       'LANDMARK',
@@ -410,10 +730,13 @@ footer{
   </button>
 
 
-  <!-- TOWERS -->
+  <!-- =================================================
+       TWIN TOWERS
+       ================================================= -->
 
   <button
     class="marker towers"
+    aria-label="Twin Towers"
     onclick="showInfo(
       'Twin Towers',
       'LANDMARK',
@@ -422,10 +745,13 @@ footer{
   </button>
 
 
-  <!-- FALCON HEAVY -->
+  <!-- =================================================
+       FALCON HEAVY
+       ================================================= -->
 
   <button
     class="marker falcon"
+    aria-label="Falcon Heavy"
     onclick="showInfo(
       'Falcon Heavy',
       'SPACEFLIGHT',
@@ -434,11 +760,21 @@ footer{
   </button>
 
 
-  <!-- INFO CARD -->
+  <!-- =================================================
+       INFORMATION CARD
+       ================================================= -->
 
-  <div class="map-info" id="mapInfo">
+  <div
+    class="map-info"
+    id="mapInfo"
+  >
 
-    <span class="close" onclick="closeInfo()">×</span>
+    <span
+      class="close"
+      onclick="closeInfo()"
+    >
+      ×
+    </span>
 
     <small id="infoType">
       LANDMARK
@@ -454,6 +790,7 @@ footer{
 
   </div>
 
+
 </div>
 
 </section>
@@ -461,39 +798,174 @@ footer{
 </main>
 
 
-<footer>
-
-  <div class="footer-inner">
-
-    <span>© 2026 Cerasus</span>
-
-    <span>Built on Rulercraft.</span>
-
-  </div>
-
-</footer>
-
-
 <script>
+
+/* =========================================================
+   INFORMATION CARD
+   ========================================================= */
 
 function showInfo(title,type,coordinates){
 
-  document.getElementById("infoTitle").textContent = title;
+  document
+    .getElementById("infoTitle")
+    .textContent = title;
 
-  document.getElementById("infoType").textContent = type;
+  document
+    .getElementById("infoType")
+    .textContent = type;
 
-  document.getElementById("infoCoordinates").textContent = coordinates;
+  document
+    .getElementById("infoCoordinates")
+    .textContent = coordinates;
 
-  document.getElementById("mapInfo").classList.add("active");
+  document
+    .getElementById("mapInfo")
+    .classList.add("active");
 
 }
 
 
 function closeInfo(){
 
-  document.getElementById("mapInfo").classList.remove("active");
+  document
+    .getElementById("mapInfo")
+    .classList.remove("active");
 
 }
+
+
+/* =========================================================
+   DRAG MARKERS
+   ========================================================= */
+
+const map = document.querySelector(".map");
+
+const markers = document.querySelectorAll(".marker");
+
+let draggingMarker = null;
+
+
+/* -------------------------
+   MOUSE / TRACKPAD
+   ------------------------- */
+
+markers.forEach(marker => {
+
+  marker.addEventListener("pointerdown", function(event){
+
+    event.preventDefault();
+
+    draggingMarker = marker;
+
+    marker.classList.add("dragging");
+
+    marker.setPointerCapture(event.pointerId);
+
+  });
+
+
+  marker.addEventListener("pointermove", function(event){
+
+    if(draggingMarker !== marker){
+      return;
+    }
+
+    const rect = map.getBoundingClientRect();
+
+    let x =
+      ((event.clientX - rect.left) / rect.width) * 100;
+
+    let y =
+      ((event.clientY - rect.top) / rect.height) * 100;
+
+
+    /*
+       Keep markers inside the map.
+    */
+
+    x = Math.max(0,Math.min(100,x));
+
+    y = Math.max(0,Math.min(100,y));
+
+
+    marker.style.left = x + "%";
+
+    marker.style.top = y + "%";
+
+  });
+
+
+  marker.addEventListener("pointerup", function(){
+
+    if(draggingMarker !== marker){
+      return;
+    }
+
+    marker.classList.remove("dragging");
+
+    draggingMarker = null;
+
+  });
+
+
+  marker.addEventListener("pointercancel", function(){
+
+    marker.classList.remove("dragging");
+
+    draggingMarker = null;
+
+  });
+
+
+  /*
+     Double-click prints the new position
+     so you can permanently save it.
+  */
+
+  marker.addEventListener("dblclick", function(event){
+
+    event.preventDefault();
+
+    const left =
+      parseFloat(marker.style.left).toFixed(2);
+
+    const top =
+      parseFloat(marker.style.top).toFixed(2);
+
+
+    const result =
+      `left:${left}%; top:${top}%;`;
+
+
+    console.log(result);
+
+    alert(
+      "New position:\n\n" +
+      result +
+      "\n\nOpen Safari's developer console to see it too."
+    );
+
+  });
+
+});
+
+
+/* =========================================================
+   CLOSE INFO CARD WHEN CLICKING OUTSIDE
+   ========================================================= */
+
+map.addEventListener("click",function(event){
+
+  if(
+    !event.target.classList.contains("marker") &&
+    !event.target.classList.contains("close")
+  ){
+
+    closeInfo();
+
+  }
+
+});
 
 </script>
 
