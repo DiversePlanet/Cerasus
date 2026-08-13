@@ -1,7 +1,53 @@
 /* =========================================================
    CERASUS — MOTION SYSTEM
-   Apple-inspired cinematic entrance
+   Cinematic Apple-inspired interface
    ========================================================= */
+
+
+/* =========================================================
+   CINEMATIC PAGE INTRO
+   ========================================================= */
+
+const intro = document.querySelector('#page-intro');
+
+const prefersReduced =
+  window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+
+
+window.addEventListener('load', () => {
+
+  if (!intro) return;
+
+
+  /* Reduced motion */
+
+  if (prefersReduced) {
+
+    document.body.classList.add(
+      'intro-finished'
+    );
+
+    return;
+
+  }
+
+
+  /*
+     The page remains completely black
+     for a short moment.
+  */
+
+  setTimeout(() => {
+
+    document.body.classList.add(
+      'intro-finished'
+    );
+
+  }, 650);
+
+});
 
 
 /* =========================================================
@@ -13,15 +59,17 @@ document.querySelectorAll('a[href^="#"]').forEach((a) => {
   a.addEventListener('click', (e) => {
 
     const target =
-      document.querySelector(a.getAttribute('href'));
+      document.querySelector(
+        a.getAttribute('href')
+      );
 
     if (target) {
 
       e.preventDefault();
 
       target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+        behavior:'smooth',
+        block:'start'
       });
 
     }
@@ -61,31 +109,7 @@ const heroStatus =
 
 
 /* =========================================================
-   REDUCED MOTION
-   ========================================================= */
-
-const prefersReduced =
-  window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
-
-
-/* =========================================================
-   CINEMATIC HERO ENTRANCE
-   =========================================================
-   
-   Sequence:
-
-   0.00s — page remains completely quiet
-   0.60s — Cerasus begins appearing
-   1.60s — Cerasus settles
-   1.95s — tagline
-   2.45s — description
-   2.90s — buttons
-   3.30s — status
-   3.70s — interface fully alive
-
-   This intentionally takes several seconds.
+   HERO ENTRANCE
    ========================================================= */
 
 window.addEventListener('load', () => {
@@ -93,13 +117,7 @@ window.addEventListener('load', () => {
   if (!heroCopy) return;
 
 
-  /* Reduced motion */
-
   if (prefersReduced) {
-
-    document.body.classList.remove(
-      'page-loading'
-    );
 
     heroCopy.classList.add('loaded');
 
@@ -109,26 +127,21 @@ window.addEventListener('load', () => {
 
 
   /*
-     Give the browser a moment to finish rendering.
-     The page starts completely silent.
+     Wait until the black intro has started
+     disappearing, then activate the hero.
   */
 
   setTimeout(() => {
 
-    document.body.classList.remove(
-      'page-loading'
-    );
-
     heroCopy.classList.add('loaded');
 
-  }, 550);
+  }, 750);
 
 });
 
 
 /* =========================================================
-   HERO MOUSE MOVEMENT
-   Very subtle Apple-style depth.
+   HERO MOUSE DEPTH
    ========================================================= */
 
 if (
@@ -144,39 +157,55 @@ if (
   let currentY = 0;
 
 
-  hero.addEventListener('mousemove', (e) => {
+  hero.addEventListener(
+    'mousemove',
+    (e) => {
 
-    const rect =
-      hero.getBoundingClientRect();
+      const rect =
+        hero.getBoundingClientRect();
 
-    mouseX =
-      ((e.clientX - rect.left) /
-        rect.width - 0.5) * 2;
+      mouseX =
+        ((e.clientX - rect.left) /
+          rect.width - .5) * 2;
 
-    mouseY =
-      ((e.clientY - rect.top) /
-        rect.height - 0.5) * 2;
+      mouseY =
+        ((e.clientY - rect.top) /
+          rect.height - .5) * 2;
 
-  });
+    }
+  );
 
 
-  function animateHeroDepth() {
+  function animateHeroDepth(){
 
     currentX +=
-      (mouseX - currentX) * 0.035;
+      (mouseX - currentX) * .035;
 
     currentY +=
-      (mouseY - currentY) * 0.035;
+      (mouseY - currentY) * .035;
 
 
     if (heroTitle) {
 
-      heroTitle.style.transform =
-        `translate3d(
-          ${currentX * 3}px,
-          ${currentY * 2}px,
-          0
-        )`;
+      /*
+         Don't overwrite the entrance transform
+         until the hero is visible.
+      */
+
+      if (
+        document.body.classList.contains(
+          'intro-finished'
+        )
+      ) {
+
+        heroTitle.style.transform =
+          `translate3d(
+            ${currentX * 3}px,
+            ${currentY * 2}px,
+            0
+          )`;
+
+      }
 
     }
 
@@ -197,7 +226,7 @@ if (
    NAVIGATION SCROLL STATE
    ========================================================= */
 
-function updateNavigation() {
+function updateNavigation(){
 
   if (!topbar) return;
 
@@ -208,17 +237,18 @@ function updateNavigation() {
 
 }
 
+
 window.addEventListener(
   'scroll',
   updateNavigation,
-  { passive: true }
+  {passive:true}
 );
 
 updateNavigation();
 
 
 /* =========================================================
-   SECTION REVEAL SYSTEM
+   SECTION REVEALS
    ========================================================= */
 
 const revealObserver =
@@ -227,7 +257,8 @@ const revealObserver =
 
       entries.forEach((entry) => {
 
-        if (!entry.isIntersecting) return;
+        if (!entry.isIntersecting)
+          return;
 
 
         entry.target.classList.add(
@@ -243,8 +274,8 @@ const revealObserver =
 
     },
     {
-      threshold: 0.14,
-      rootMargin: '0px 0px -8% 0px'
+      threshold:.14,
+      rootMargin:'0px 0px -8% 0px'
     }
   );
 
@@ -255,7 +286,9 @@ document
   )
   .forEach((element) => {
 
-    revealObserver.observe(element);
+    revealObserver.observe(
+      element
+    );
 
   });
 
@@ -290,10 +323,10 @@ if (
 
 
           const rotateX =
-            (0.5 - y) * 3;
+            (.5 - y) * 3;
 
           const rotateY =
-            (x - 0.5) * 3;
+            (x - .5) * 3;
 
 
           card.style.transform =
@@ -338,7 +371,8 @@ if (counter && !prefersReduced) {
 
         entries.forEach((entry) => {
 
-          if (!entry.isIntersecting) return;
+          if (!entry.isIntersecting)
+            return;
 
 
           const target =
@@ -350,12 +384,11 @@ if (counter && !prefersReduced) {
           const start =
             performance.now();
 
-
           const duration =
             1100;
 
 
-          function tick(now) {
+          function tick(now){
 
             const progress =
               Math.min(
@@ -364,10 +397,6 @@ if (counter && !prefersReduced) {
                 1
               );
 
-
-            /*
-               Apple-style ease-out.
-            */
 
             const eased =
               1 -
@@ -383,7 +412,7 @@ if (counter && !prefersReduced) {
               );
 
 
-            if (progress < 1) {
+            if (progress < 1){
 
               requestAnimationFrame(
                 tick
@@ -407,7 +436,7 @@ if (counter && !prefersReduced) {
 
       },
       {
-        threshold: 0.7
+        threshold:.7
       }
     );
 
@@ -454,7 +483,7 @@ if (timelineSection) {
 
       },
       {
-        threshold: 0.15
+        threshold:.15
       }
     );
 
@@ -467,7 +496,7 @@ if (timelineSection) {
 
 
 /* =========================================================
-   SUBTLE SCROLL PARALLAX
+   HERO ARC PARALLAX
    ========================================================= */
 
 if (
@@ -495,19 +524,19 @@ if (
       if (heroArc) {
 
         heroArc.style.marginTop =
-          `${scrollY * 0.035}px`;
+          `${scrollY * .035}px`;
 
       }
 
     },
-    { passive: true }
+    {passive:true}
   );
 
 }
 
 
 /* =========================================================
-   IMAGE LAZY REVEAL
+   IMAGE LOAD
    ========================================================= */
 
 document
