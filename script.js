@@ -45,7 +45,7 @@ window.addEventListener('load', () => {
       'intro-finished'
     );
 
-  }, 650);
+  }, 900);
 
 });
 
