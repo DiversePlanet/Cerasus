@@ -2576,3 +2576,225 @@ body.intro-finished .hero-copy{
   }
 
 }
+
+/* =========================================================
+   CERASUS — MOBILE HERO FIX
+   ========================================================= */
+
+@media (max-width: 800px){
+
+  .hero{
+    height:auto;
+    min-height:100svh;
+
+    padding:
+      110px
+      20px
+      90px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+  }
+
+  .hero-copy{
+    width:100%;
+    max-width:430px;
+
+    margin:0 auto;
+
+    padding:0 8px;
+  }
+
+  /* Kicker */
+
+  .hero-copy .kicker{
+    margin:0 0 18px;
+
+    font-size:10px;
+    line-height:1.4;
+
+    letter-spacing:2.5px;
+  }
+
+  /* Main title */
+
+  .cerasus-hero-title{
+    font-size:18vw!important;
+
+    line-height:.9!important;
+
+    letter-spacing:-4px!important;
+
+    margin:
+      0
+      0
+      18px!important;
+  }
+
+  /* Tagline */
+
+  .hero-tagline{
+    font-size:8vw!important;
+
+    line-height:1.05!important;
+
+    letter-spacing:-1.5px!important;
+
+    margin:
+      0
+      auto
+      20px!important;
+
+    max-width:390px;
+  }
+
+  /* Description */
+
+  .hero .lead{
+    max-width:360px;
+
+    margin:
+      0
+      auto;
+
+    font-size:15px;
+
+    line-height:1.5;
+  }
+
+  /* Buttons */
+
+  .hero-actions{
+    margin-top:24px;
+
+    gap:9px;
+  }
+
+  .hero-primary,
+  .hero-secondary{
+    width:235px;
+
+    min-height:48px;
+
+    font-size:15px;
+  }
+
+  /* Status */
+
+  .hero-status{
+    margin-top:22px;
+
+    font-size:8px;
+
+    letter-spacing:1.5px;
+
+    gap:6px;
+
+    line-height:1.5;
+  }
+
+  .hero-status strong{
+    font-size:9px;
+  }
+
+  .hero-status i{
+    margin:0 3px;
+  }
+
+  /* Arc */
+
+  .hero-arc{
+    width:125vw;
+    height:125vw;
+
+    bottom:-72%;
+
+    opacity:.6;
+  }
+
+  /* Bottom caption */
+
+  .hero-caption{
+    bottom:24px;
+
+    font-size:8px;
+
+    letter-spacing:2.2px;
+
+    width:100%;
+
+    text-align:center;
+
+    padding:0 15px;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width:480px){
+
+  .hero{
+    min-height:100svh;
+
+    padding:
+      95px
+      16px
+      80px;
+  }
+
+  .hero-copy{
+    max-width:400px;
+
+    padding:0 4px;
+  }
+
+  .cerasus-hero-title{
+    font-size:17.5vw!important;
+
+    letter-spacing:-4px!important;
+  }
+
+  .hero-tagline{
+    font-size:8.2vw!important;
+
+    max-width:350px;
+  }
+
+  .hero .lead{
+    font-size:15px;
+
+    max-width:340px;
+  }
+
+  .hero-primary,
+  .hero-secondary{
+    width:225px;
+
+    min-height:46px;
+  }
+
+  .hero-status{
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    max-width:340px;
+
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .hero-caption{
+    bottom:18px;
+
+    font-size:7px;
+
+    letter-spacing:1.8px;
+  }
+}
