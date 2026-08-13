@@ -229,7 +229,9 @@ body.page-loading .hero-copy{
   color:var(--gray);
 }
 
-/* Hero entrance */
+/* =========================================================
+   HERO ENTRANCE
+   ========================================================= */
 
 .hero-copy .kicker,
 .hero-copy h1,
@@ -267,7 +269,9 @@ body.page-loading .hero-copy{
   }
 }
 
-/* Hero title */
+/* =========================================================
+   HERO TITLE
+   ========================================================= */
 
 .cerasus-hero-title{
   font-size:clamp(60px,7.2vw,108px)!important;
@@ -287,7 +291,9 @@ body.page-loading .hero-copy{
   text-shadow:none!important;
 }
 
-/* Hero quote */
+/* =========================================================
+   HERO QUOTE
+   ========================================================= */
 
 .hero-tagline{
   font-size:clamp(31px,4vw,53px)!important;
@@ -306,7 +312,9 @@ body.page-loading .hero-copy{
     0 0 45px rgba(190,105,255,.12);
 }
 
-/* Hero description */
+/* =========================================================
+   HERO DESCRIPTION
+   ========================================================= */
 
 .hero .lead{
   font-size:18px;
@@ -319,7 +327,9 @@ body.page-loading .hero-copy{
   line-height:1.45;
 }
 
-/* Hero buttons */
+/* =========================================================
+   HERO BUTTONS
+   ========================================================= */
 
 .hero-actions{
   display:flex;
@@ -382,7 +392,9 @@ body.page-loading .hero-copy{
   border-color:#666;
 }
 
-/* Hero information */
+/* =========================================================
+   HERO INFORMATION
+   ========================================================= */
 
 .hero-status{
   display:flex;
@@ -422,7 +434,9 @@ body.page-loading .hero-copy{
   margin:0 6px;
 }
 
-/* Hero arc */
+/* =========================================================
+   HERO ARC
+   ========================================================= */
 
 .hero-arc{
   position:absolute;
@@ -444,6 +458,9 @@ body.page-loading .hero-copy{
     inset 0 20px 80px rgba(190,110,255,.04);
 
   opacity:.8;
+
+  animation:
+    arcFloat 10s ease-in-out infinite alternate;
 }
 
 .hero-arc::before{
@@ -469,6 +486,18 @@ body.page-loading .hero-copy{
   letter-spacing:3px;
 }
 
+@keyframes arcFloat{
+  from{
+    opacity:.55;
+    transform:translateX(-50%) scale(.98);
+  }
+
+  to{
+    opacity:.9;
+    transform:translateX(-50%) scale(1.02);
+  }
+}
+
 /* =========================================================
    WHITE STATEMENT SECTION
    ========================================================= */
@@ -481,7 +510,7 @@ body.page-loading .hero-copy{
 .statement{
   text-align:center;
 
-  padding:170px 20px 190px;
+  padding:170px 20px 55px;
 }
 
 .statement .eyebrow{
@@ -569,7 +598,7 @@ body.page-loading .hero-copy{
   color:#6e6e73;
 
   margin-top:38px;
-  margin-bottom:110px;
+  margin-bottom:15px;
 
   animation-delay:.3s;
 }
@@ -869,7 +898,11 @@ body.page-loading .hero-copy{
 
   color:#1d1d1f;
 
-  padding:150px 5%;
+  /*
+     Reduced bottom padding so the archive
+     starts much closer to the project cards.
+  */
+  padding:150px 5% 35px;
 }
 
 .project-intro{
@@ -1236,7 +1269,9 @@ body.page-loading .hero-copy{
   font-size:20px;
 }
 
-/* Visit location */
+/* =========================================================
+   VISIT LOCATION
+   ========================================================= */
 
 .visit-location{
   display:flex;
@@ -1317,10 +1352,17 @@ body.page-loading .hero-copy{
 
   color:#1d1d1f;
 
-  padding:160px 6% 180px;
+  /*
+     Reduced from 160px.
+     The archive now begins much closer to
+     the project section above it.
+  */
+  padding:75px 6% 180px;
 }
 
-/* Header */
+/* =========================================================
+   TIMELINE HEADER
+   ========================================================= */
 
 .timeline-header{
   max-width:900px;
@@ -1376,7 +1418,9 @@ body.page-loading .hero-copy{
   line-height:1.5;
 }
 
-/* Timeline container */
+/* =========================================================
+   TIMELINE CONTAINER
+   ========================================================= */
 
 .cerasus-timeline{
   position:relative;
@@ -1386,7 +1430,9 @@ body.page-loading .hero-copy{
   margin:auto;
 }
 
-/* Central line */
+/* =========================================================
+   CENTRAL LINE
+   ========================================================= */
 
 .cerasus-timeline::before{
   content:"";
@@ -1412,7 +1458,9 @@ body.page-loading .hero-copy{
   transform:translateX(-50%);
 }
 
-/* Timeline event */
+/* =========================================================
+   TIMELINE EVENT
+   ========================================================= */
 
 .timeline-event{
   position:relative;
@@ -1430,13 +1478,7 @@ body.page-loading .hero-copy{
     transform .9s cubic-bezier(.22,1,.36,1);
 }
 
-/* IMPORTANT:
-   No animation property here.
-   The JS-controlled .timeline-visible state
-   handles the animation.
-*/
-
-/* Left */
+/* LEFT */
 
 .timeline-event:nth-child(odd){
   left:0;
@@ -1444,7 +1486,7 @@ body.page-loading .hero-copy{
   text-align:right;
 }
 
-/* Right */
+/* RIGHT */
 
 .timeline-event:nth-child(even){
   left:50%;
@@ -1452,7 +1494,9 @@ body.page-loading .hero-copy{
   text-align:left;
 }
 
-/* Stagger */
+/* =========================================================
+   STAGGER
+   ========================================================= */
 
 .timeline-section.timeline-visible
 .timeline-event:nth-child(1){
@@ -1484,7 +1528,9 @@ body.page-loading .hero-copy{
   transition-delay:.60s;
 }
 
-/* Show events */
+/* =========================================================
+   SHOW EVENTS
+   ========================================================= */
 
 .timeline-section.timeline-visible
 .timeline-event{
@@ -1493,7 +1539,9 @@ body.page-loading .hero-copy{
   transform:translateY(0);
 }
 
-/* Timeline dots */
+/* =========================================================
+   TIMELINE DOTS
+   ========================================================= */
 
 .timeline-dot{
   position:absolute;
@@ -1539,7 +1587,9 @@ body.page-loading .hero-copy{
   opacity:1;
 }
 
-/* Dot stagger */
+/* =========================================================
+   DOT STAGGER
+   ========================================================= */
 
 .timeline-section.timeline-visible
 .timeline-event:nth-child(1)
@@ -1577,7 +1627,9 @@ body.page-loading .hero-copy{
   transition-delay:.65s;
 }
 
-/* Date */
+/* =========================================================
+   TIMELINE DATE
+   ========================================================= */
 
 .timeline-date{
   display:block;
@@ -1603,7 +1655,9 @@ body.page-loading .hero-copy{
   letter-spacing:2.5px;
 }
 
-/* Title */
+/* =========================================================
+   TIMELINE TITLE
+   ========================================================= */
 
 .timeline-event h3{
   font-size:clamp(28px,3vw,42px);
@@ -1617,7 +1671,9 @@ body.page-loading .hero-copy{
   font-weight:650;
 }
 
-/* Description */
+/* =========================================================
+   TIMELINE DESCRIPTION
+   ========================================================= */
 
 .timeline-event p{
   color:#777;
@@ -1635,7 +1691,9 @@ body.page-loading .hero-copy{
   margin-left:auto;
 }
 
-/* Category */
+/* =========================================================
+   TIMELINE CATEGORY
+   ========================================================= */
 
 .timeline-category{
   display:block;
@@ -1659,7 +1717,9 @@ body.page-loading .hero-copy{
   transform:translateY(-2px);
 }
 
-/* Final */
+/* =========================================================
+   FINAL TIMELINE EVENT
+   ========================================================= */
 
 .timeline-event.final{
   padding-bottom:0;
@@ -1741,27 +1801,6 @@ body.page-loading .hero-copy{
 
 .reveal-card:nth-child(3){
   transition-delay:.16s;
-}
-
-/* =========================================================
-   DARK SECTION ATMOSPHERE
-   ========================================================= */
-
-.hero-arc{
-  animation:
-    arcFloat 10s ease-in-out infinite alternate;
-}
-
-@keyframes arcFloat{
-  from{
-    opacity:.55;
-    transform:translateX(-50%) scale(.98);
-  }
-
-  to{
-    opacity:.9;
-    transform:translateX(-50%) scale(1.02);
-  }
 }
 
 /* =========================================================
@@ -1887,7 +1926,7 @@ footer .apple-brand{
   /* Statement */
 
   .statement{
-    padding:110px 20px;
+    padding:110px 20px 45px;
   }
 
   .statement h2{
@@ -1896,6 +1935,10 @@ footer .apple-brand{
 
   .city-meta{
     gap:10px;
+  }
+
+  .light-motto{
+    margin-bottom:20px;
   }
 
   /* Feature */
@@ -1930,7 +1973,7 @@ footer .apple-brand{
   /* Projects */
 
   .projects{
-    padding:100px 6%;
+    padding:100px 6% 25px;
   }
 
   .project-intro h2{
@@ -2005,7 +2048,7 @@ footer .apple-brand{
   /* Timeline */
 
   .timeline-section{
-    padding:100px 25px 120px;
+    padding:70px 25px 120px;
   }
 
   .timeline-header{
