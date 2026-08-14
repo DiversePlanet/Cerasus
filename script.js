@@ -1,4 +1,14 @@
 /* =========================================================
+   ALWAYS START AT TOP ON PAGE LOAD
+   ========================================================= */
+
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
+window.scrollTo(0, 0);
+
+/* =========================================================
    CERASUS — MOTION SYSTEM
    Cinematic Apple-inspired interface
    ========================================================= */
